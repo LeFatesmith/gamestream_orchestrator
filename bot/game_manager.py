@@ -1,9 +1,59 @@
 import subprocess
+import steam.webapi as steamapi
 import os
 
 class GameManager:
     def __init__(self, steam_path: Optional[str] = None):
         self.steam_path = steam_path or self.get_steam_path()
+
+    def get_owned_games(api_key, steam_id):
+        """Retrieve and store the owned games list for a user identified by their Steam ID."""
+        steam_client = steamapi.WebAPI(api_key)
+        owned_games = steam_client.IPlayerService.GetOwnedGames(
+            steamid=steam_id,
+            include_appinfo=True,
+            include_played_free_games=True,
+            appids_filter=[],
+            include_free_sub=True,
+            language='en',
+            include_extended_appinfo=True
+        )
+
+        if 'games' in owned_games['response']:
+            file_path = f"{steam_id}_games.txt"
+            with open(file_path, 'w', encoding='utf-8') as file:
+                for game in owned_games['response']['games']:
+                    file.write(f"Game: {game['name']}, Steam ID: {game['appid']}\n")
+            print(f"Game list saved to {file_path}")
+        else:
+            print("No games found or an error occurred.")
+
+    def load_games_list(file_path):
+        """Load the games and Steam IDs from the provided text file."""
+        games = []
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+            for line in lines:
+                if line.startswith("Game:"):
+                    parts = line.split(", Steam ID: ")
+                    if len(parts) == 2:
+                        game_name = parts[0].replace("Game: ", "").strip()
+                        steam_id = parts[1].strip()
+                        games.append({"name": game_name, "steam_id": steam_id})
+        return games
+
+    def compare_game_lists(game_lists, n=0):
+        """Compare multiple game lists and find games common to all but n users."""
+        from collections import Counter
+
+        all_games = [game['name'] for games in game_lists for game in games]
+        game_counter = Counter(all_games)
+        total_users = len(game_lists)
+
+        common_games = [game for game, count in game_counter.items() if count >= total_users - n]
+        users_missing = {game: [i for i, games in enumerate(game_lists) if game not in [g['name'] for g in games]] for game in common_games}
+
+        return common_games, users_missing
 
     def get_steam_path(self) -> str:
         if os.name == "nt":

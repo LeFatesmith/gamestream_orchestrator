@@ -1,6 +1,7 @@
 import yaml
 from bot import lobby_manager
 from bot.game_manager import get_owned_games, load_games_list, compare_game_lists
+from bot.twitch_bot import TwitchBot
 
 def load_config(config_path='configs/config.yaml'):
     with open(config_path, 'r') as file:

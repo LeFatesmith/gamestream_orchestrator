@@ -13,6 +13,7 @@ steam:
   name: "friend1"
   steam_id: "friend1_steam_id"
   api_key: "your_steam_api_key"
+  end_running_game_prompt: true
   path: "C:/Program Files (x86)/Steam"
   friends:
     - name: "friend1"

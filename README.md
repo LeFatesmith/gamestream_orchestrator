@@ -1,4 +1,4 @@
-# Game & Stream Orchestrator Bot Setup
+# GameStream Orchestrator Bot Setup
 
 ## Requirements
 - Python 3.8 or higher

@@ -1,5 +1,7 @@
 # GameStream Orchestrator Bot Setup
 
+## Status: WIP
+
 ## Requirements
 - Python 3.8 or higher
 - Pipenv

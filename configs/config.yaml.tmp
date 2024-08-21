@@ -1,0 +1,21 @@
+twitch:
+  irc_token: "your_twitch_irc_token"
+  client_id: "your_twitch_client_id"
+  nick: "your_bot_nick"
+  prefix: "!"
+  initial_channels:
+    - "your_channel_name"
+
+obs:
+  obs_path: "C:/Program Files/obs-studio/bin/64bit/obs64.exe"
+
+steam:
+  name: "friend1"
+  steam_id: "friend1_steam_id"
+  api_key: "your_steam_api_key"
+  path: "C:/Program Files (x86)/Steam"
+  friends:
+    - name: "friend1"
+      steam_id: "friend1_steam_id"
+    - name: "friend2"
+      steam_id: "friend2_steam_id"

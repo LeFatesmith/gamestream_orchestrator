@@ -36,8 +36,11 @@ def join_friend_lobby(api_key, friend_steam_id):
 
 def main():
     config = load_config()
-    api_key = config['steam_api_key']
-    for friend in config['friends']:
+    steam_config = config['steam']
+    api_key = steam_config['api_key']
+    friends = steam_config['friends']
+
+    for friend in friends:
         join_friend_lobby(api_key, friend['steam_id'])
 
 if __name__ == "__main__":
